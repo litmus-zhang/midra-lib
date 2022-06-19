@@ -4,7 +4,7 @@ module.exports = buildSchema(`
     type User {
         _id: ID
         email: String!
-        password: String!
+        password: String
     }
     type Borrower {
         _id: ID!
@@ -46,7 +46,7 @@ module.exports = buildSchema(`
     type RootMutation {
         borrowBook(bookId: ID!): Borrower!
         createUser(userInput: UserInput): User!
-        login(email: String!, password: String!): AuthUser!
+        login(email: String!, password: String!): User!
         addBook(bookInput: BookInput): Book
     }
     schema {

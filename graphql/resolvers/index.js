@@ -70,19 +70,20 @@ module.exports = {
             }
         }
     },
-    login: async (args) =>
+    login: async ({ email, password } ) =>
     {
-        const { email, password } = args;
-        const fetchedUser = await User.findOne({ email });
-        if (!fetchedUser)
+        const user = await User.findOne({ email });
+        if (!user)  
         {
             throw new Error('User does not exist');
         }
-        const isEqual = await bcrypt.compare(password, fetchedUser.password);
+        const isEqual = await bcrypt.compare(password, user.password);
         if (!isEqual)
         {
             throw new Error('Password is incorrect');
         }
-        return { ...fetchedUser._doc };
+        
+        return {...user._doc, password: null};
+
     }
 }
