@@ -69,5 +69,20 @@ module.exports = {
                 throw error;
             }
         }
+    },
+    login: async (args) =>
+    {
+        const { email, password } = args;
+        const fetchedUser = await User.findOne({ email });
+        if (!fetchedUser)
+        {
+            throw new Error('User does not exist');
+        }
+        const isEqual = await bcrypt.compare(password, fetchedUser.password);
+        if (!isEqual)
+        {
+            throw new Error('Password is incorrect');
+        }
+        return { ...fetchedUser._doc };
     }
 }

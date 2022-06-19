@@ -13,6 +13,12 @@ module.exports = buildSchema(`
         nationalID: String!
         dateBorrowed: String!
     }
+
+    type AuthUser{
+        userId: ID!
+        token: String
+        tokenExpiration: Int!
+    }
     input BookInput {
         title: String!
         isbn: String!
@@ -40,7 +46,7 @@ module.exports = buildSchema(`
     type RootMutation {
         borrowBook(bookId: ID!): Borrower!
         createUser(userInput: UserInput): User!
-        login(email: String!, password: String!): User
+        login(email: String!, password: String!): AuthUser!
         addBook(bookInput: BookInput): Book
     }
     schema {
