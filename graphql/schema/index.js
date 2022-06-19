@@ -41,7 +41,7 @@ module.exports = buildSchema(`
         borrower: Borrower
     }
     type RootQuery {
-        books: [Book]
+        books: [Book!]!
     }
     type RootMutation {
         borrowBook(bookId: ID!): Borrower!

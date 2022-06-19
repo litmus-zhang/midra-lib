@@ -17,6 +17,10 @@ const borrowerSchema = new mongoose.Schema({
         type: Date,
         required: true,
         default: Date.now
+    },
+    book: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Book'
     }
 }, { strict: false });
 

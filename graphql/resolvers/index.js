@@ -41,6 +41,41 @@ module.exports = {
             throw error;
         }
     },
+    borrowBook: async (args) =>
+    {
+        const bookId = args.bookId;
+        const borrower = new Borrower({
+            name: '',
+            mobileNo: '',
+            nationalID: '',
+            dateBorrowed: Date.now(),
+            book: bookId
+        })
+
+        try
+        {
+            const book = await Book.findById(bookId).populate('borrower');
+            if (!book)
+            {
+                throw new Error('Book not found');
+            }
+            if (book.borrowed)
+            {
+                throw new Error('Book is already borrowed');
+            }
+            let borrowedBook
+            book.borrowed = true;
+            book.borrower = borrower;
+            borrowedBook = await book.save();
+            borrower.push(borrowedBook);
+            return { ...book._doc, ...borrower._doc };
+         } catch (error)
+        { 
+            console.log(error);
+            throw error;
+        }
+
+    },
     createUser: async (args) =>
     {
 
